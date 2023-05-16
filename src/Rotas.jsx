@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
 
-import FormCliente from './views/cliente/FormCliente';
 import FormBarbeiro from './views/barbeiro/FormBarbeiro';
-import Home from './views/home/Home';
+import FormCliente from './views/cliente/FormCliente';
 import FormCorte from './views/corte/FormCorte';
+import Home from './views/home/Home';
+import Inicio from './views/inicio/Inicio';
 
 function Rotas() {
     return (
@@ -14,6 +15,7 @@ function Rotas() {
                 <Route path="form-cliente" element={ <FormCliente/> } />
                 <Route path="form-barbeiro" element={ <FormBarbeiro/> } />
                 <Route path="form-corte" element={ <FormCorte/> } />
+                <Route path="form-inicio" element={ <Inicio/> } />
             </Routes>
         </>
     )

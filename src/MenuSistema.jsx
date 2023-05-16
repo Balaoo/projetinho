@@ -46,6 +46,14 @@ class MenuSistema extends React.Component{
                        as={Link}
                        to='/form-barbeiro'
                    />
+                   <Menu.Item
+                       name='inicio'
+                       active={this.state.activeItem === 'barbeiro'}
+                       onClick={this.handleItemClick}
+                       as={Link}
+                       to='/form-inicio'
+                   />
+
 
                </Menu>
            </>
