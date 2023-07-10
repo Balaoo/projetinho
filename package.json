@@ -1,21 +1,18 @@
 {
-  "name": "projetinho",
+  "name": "oxefood-web",
   "version": "0.1.0",
   "private": true,
-  "keywords": ["semantic-ui-react"],
-  "main": "src/inicio/Inicio.jsx",
   "dependencies": {
-    "prop-types": "15.6.2",
-    "pure-react-carousel": "1.17.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "bootstrap": "^5.2.3",
+    "axios": "^1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-input-mask": "^2.0.4",
-    "react-router-dom": "^6.11.1",
+    "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.3",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "web-vitals": "^2.1.4"
@@ -32,13 +29,11 @@
       "react-app/jest"
     ]
   },
-  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all",
-      ">0.2%", "not dead", "not ie <= 11", "not op_mini all"
+      "not op_mini all"
     ],
     "development": [
       "last 1 chrome version",

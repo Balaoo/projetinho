@@ -1,116 +1,201 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { ENDERECO_API } from '../../views/util/Constantes';
+import { formatarData, mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
 
-class FormCliente extends React.Component{
+export default function FormCliente() {
 
-    render(){
-        return(
-            <div>
+    const { state } = useLocation();
 
-                <div style={{marginTop: '3%'}}>
+    const [idCliente, setIdCliente] = useState();
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [dataNascimento, setDataNascimento] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [foneFixo, setFoneFixo] = useState();
 
-                    <Container textAlign='justified' >
+    useEffect(() => {
 
-                        <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+        if (state != null && state.id != null) {
 
-                        <Divider />
+            axios.get(ENDERECO_API + "api/cliente/" + state.id)
+                .then((response) => {
 
-						<div style={{marginTop: '4%'}}>
+                    setIdCliente(response.data.id)
+                    setNome(response.data.nome)
+                    setCpf(response.data.cpf)
+                    setDataNascimento(formatarData(response.data.dataNascimento))
+                    setFoneCelular(response.data.foneCelular)
+                    setFoneFixo(response.data.foneFixo)
+                })
+        }
 
-							<Form>
+    }, [state])
 
-								<Form.Group widths='equal'>
+    function salvar() {
 
-									<Form.Input
-										required
-										fluid
-										label='Nome'
-										maxLength="100"
-									/>
+        let clienteRequest = {
 
-									<Form.Input
-										fluid
-										label='CPF'>
-										<InputMask 
-										mask="999.999.999-99"/> 
-									</Form.Input>
+            nome: nome,
+            cpf: cpf,
+            dataNascimento: dataNascimento,
+            foneCelular: foneCelular,
+            foneFixo: foneFixo
+        }
 
-								</Form.Group>
-								
-								<Form.Group>
+        if (idCliente != null) { //Alteração:
 
-									<Form.Input
-										fluid
-										label='Fone Celular'
-                                        width={6}>
-										<InputMask 
-										mask="(99) 9999.9999" /> 
-									</Form.Input>
+            axios.put(ENDERECO_API + "api/cliente/" + idCliente, clienteRequest)
+                .then((response) => { console.log('Cliente alterado com sucesso.') })
+                .catch((error) => { console.log('Erro ao alter um cliente.') })
 
-									<Form.Input
-										fluid
-										label='Fone Fixo'
-                                        width={6}>
-										<InputMask 
-										mask="(99) 9999.9999" /> 
-									</Form.Input>
+        } else { //Cadastro:
 
-                                    <Form.Input
-                                        fluid
-                                        label='Data Nascimento'
-                                        width={6}
-                                    >
-                                        <InputMask 
-                                            mask="99/99/9999" 
-                                            maskChar={null}
-                                            placeholder="Ex: 20/03/1985"
-                                        /> 
-                                    </Form.Input>
+            axios.post(ENDERECO_API + "api/cliente", clienteRequest)
+                .then((response) => {
+                    notifySuccess('Cliente cadastrado com sucesso.')
+                })
+                .catch((error) => {
 
-								</Form.Group>
+                    if (error.response) {
+                        notifyError(error.response.data.errors[0].defaultMessage)
+                    } else {
+                        notifyError(mensagemErro)
+                    }
 
-								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
+                })
+        }
+    }
 
-									<Button
-										type="button"
-										inverted
-										circular
-										icon
-										labelPosition='left'
-										color='orange'
-										onClick={this.listar}
-										>
-										<Icon name='reply' />
-										Voltar
-									</Button>
+    return (
 
-									<Container textAlign='right'>
-										
-										<Button
-											inverted
-											circular
-											icon
-											labelPosition='left'
-											color='blue'
-											floated='right'
-											onClick={this.salvar}
-										>
-											<Icon name='save' />
-											Salvar
-										</Button>
-										
-									</Container>
+        <div>
 
-								</Form.Group>
+            <div style={{ marginTop: '3%' }}>
 
-							</Form>
-						</div>
-                    </Container>
-                </div>
-			</div>
-		)
-	}
+                <Container textAlign='justified' >
+
+                    {idCliente === undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+                    }
+                    {idCliente != undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+                    }
+
+                    <Divider />
+
+                    <div style={{ marginTop: '4%' }}>
+
+                        <Form>
+
+                            <Form.Group widths='equal'>
+
+                                <Form.Input
+                                    required
+                                    onInvalid={e => e.target.setCustomValidity("Prenchimento obrigatório")}
+                                    onInput={F => F.target.setCustomValidity('')}
+                                    fluid
+                                    label='Nome'
+                                    maxLength="100"
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
+                                />
+
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label='CPF'>
+                                    <InputMask
+                                        required
+                                        onInvalid={e => e.target.setCustomValidity("Prenchimento obrigatório")}
+                                        onInput={F => F.target.setCustomValidity('')}
+                                        mask="999.999.999-99"
+                                        value={cpf}
+                                        onChange={e => setCpf(e.target.value)}
+                                    />
+                                </Form.Input>
+
+                            </Form.Group>
+
+                            <Form.Group>
+
+                                <Form.Input
+                                    fluid
+                                    label='Fone Celular'
+                                    width={6}>
+                                    <InputMask
+                                        mask="(99) 9999.9999"
+                                        value={foneCelular}
+                                        onChange={e => setFoneCelular(e.target.value)}
+                                    />
+                                </Form.Input>
+
+                                <Form.Input
+                                    fluid
+                                    label='Fone Fixo'
+                                    width={6}>
+                                    <InputMask
+                                        mask="(99) 9999.9999"
+                                        value={foneFixo}
+                                        onChange={e => setFoneFixo(e.target.value)}
+                                    />
+                                </Form.Input>
+
+                                <Form.Input
+                                    fluid
+                                    label='Data Nascimento'
+                                    width={6}
+                                >
+                                    <InputMask
+                                        mask="99/99/9999"
+                                        maskChar={null}
+                                        placeholder="Ex: 20/03/1985"
+                                        value={dataNascimento}
+                                        onChange={e => setDataNascimento(e.target.value)}
+                                    />
+                                </Form.Input>
+
+                            </Form.Group>
+
+                        </Form>
+
+                        <div style={{ marginTop: '4%' }}>
+
+                            <Form.Group widths='equal' style={{ marginTop: '4%', justifyContent: 'space-between' }}>
+
+                                <Button
+                                    tabIndex='8'
+                                    label='Voltar'
+                                    circular
+                                    color='orange'
+                                    icon='reply'
+                                    as={Link}
+                                    to='/list-cliente'
+                                />
+
+                                <Button
+                                    tabIndex='9'
+                                    label='Salvar'
+                                    circular
+                                    color='blue'
+                                    icon='save'
+                                    floated='right'
+                                    onClick={() => salvar()}
+                                />
+
+                            </Form.Group>
+
+                        </div>
+
+                    </div>
+
+                </Container>
+            </div>
+        </div>
+
+    );
+
 }
-
-export default FormCliente;
