@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Header, Icon, List, Menu, Form, Modal, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Icon, List, Menu, Modal, Segment, Table } from 'semantic-ui-react';
 import { ENDERECO_API } from '../../views/util/Constantes';
 import { formatarData } from '../../views/util/Util';
 
@@ -93,6 +93,44 @@ class ListEntregador extends React.Component {
             })
     };
 
+    handleMenuFiltro = () => {
+        this.state.menuFiltro === true ? this.setState({menuFiltro: false}) : this.setState({menuFiltro: true})
+    }
+
+    handleChangeCodigo = (e, {value}) => {
+        this.setState({
+            codigo: value
+        }, () => this.filtrarProdutos())
+    }
+
+    handleChangeTitulo = (e, {value}) => {
+        this.setState({
+            titulo: value
+        }, () => this.filtrarProdutos())
+    }
+
+    handleChangeCategoriaProduto = (e, { value }) => {
+        this.setState({ 
+            idCategoria: value,
+        }, () => this.filtrarProdutos())
+    }
+
+    filtrarProdutos = () => {
+
+        let formData = new FormData();
+
+        formData.append('codigo', this.state.codigo);
+        formData.append('titulo', this.state.titulo);
+        formData.append('idCategoria', this.state.idCategoria);
+
+        axios.post(ENDERECO_API + "api/produto/filtrar", formData)
+        .then((response) => {
+            this.setState({
+                listaProdutos: response.data
+            })
+        })
+    
+    }
     render() {
         return (
             <div>

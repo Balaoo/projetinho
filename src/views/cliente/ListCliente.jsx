@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Header, Menu,Form, Segment, Icon, Modal, Table } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Icon, Menu, Modal, Segment, Table } from 'semantic-ui-react';
 import { ENDERECO_API } from '../../views/util/Constantes';
 import { formatarData } from '../../views/util/Util';
 
@@ -71,7 +71,44 @@ class ListCliente extends React.Component {
                 console.log('Erro ao remover um cliente.')
             })
     };
+    handleMenuFiltro = () => {
+        this.state.menuFiltro === true ? this.setState({menuFiltro: false}) : this.setState({menuFiltro: true})
+    }
 
+    handleChangeCodigo = (e, {value}) => {
+        this.setState({
+            codigo: value
+        }, () => this.filtrarProdutos())
+    }
+
+    handleChangeTitulo = (e, {value}) => {
+        this.setState({
+            titulo: value
+        }, () => this.filtrarProdutos())
+    }
+
+    handleChangeCategoriaProduto = (e, { value }) => {
+        this.setState({ 
+            idCategoria: value,
+        }, () => this.filtrarProdutos())
+    }
+
+    filtrarProdutos = () => {
+
+        let formData = new FormData();
+
+        formData.append('codigo', this.state.codigo);
+        formData.append('titulo', this.state.titulo);
+        formData.append('idCategoria', this.state.idCategoria);
+
+        axios.post(ENDERECO_API + "api/produto/filtrar", formData)
+        .then((response) => {
+            this.setState({
+                listaProdutos: response.data
+            })
+        })
+    
+    }
     render() {
         return (
             <div>
@@ -82,7 +119,7 @@ class ListCliente extends React.Component {
 
                     <Container textAlign='justified' >
 
-                        <h2> Produto </h2>
+                        <h2> Cliente </h2>
 
                         <Divider />
 
@@ -106,7 +143,7 @@ class ListCliente extends React.Component {
                                 icon='clipboard outline'
                                 floated='right'
                                 as={Link}
-                                to='/form-produto'
+                                to='/form-cliente'
                             />
 
                             {this.state.menuFiltro ?
@@ -117,8 +154,8 @@ class ListCliente extends React.Component {
                                             icon="search"
                                             value={this.state.codigo}
                                             onChange={this.handleChangeCodigo}
-                                            label='Código do Produto'
-                                            placeholder='Filtrar por Código do Produto'
+                                            label='Código do cliente'
+                                            placeholder='Filtrar por Código do cliente'
                                             labelPosition='left'
                                             width={4}
                                         />

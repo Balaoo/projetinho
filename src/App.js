@@ -1,10 +1,7 @@
 import { Segment } from 'semantic-ui-react';
-import logo from './logo.svg';
 import './App.css';
-import Home from './views/home/Home';
-import FormCliente from './views/cliente/FormCliente';
-import Rotas from './Rotas';
 import MenuSistema from './MenuSistema';
+import Rotas from './Rotas';
 
 function App() {
 

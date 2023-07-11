@@ -120,7 +120,6 @@ export default function FormProduto () {
 							</Form.Group>
 
 							<Form.Select
-								required
 								fluid
 								tabIndex='3'
 								placeholder='Selecione'
