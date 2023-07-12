@@ -26,7 +26,7 @@ const Agenda = () => (
           "\n\n    body {\n  background-color: azure;\n}\n.navbar {\nz-index: 999;\n}\n\n.carousel-control-prev,\n.carousel-control-next {\nbackground-color: rgba(0, 0, 0, 0.5);\n}\n\n.carousel-indicators {\nbottom: 10px;\n}\n\n.card-img-top {\nheight: 300px;\nobject-fit: cover;\n}\n\n.modal-dialog {\nmax-width: 600px;\n}\n\n.modal-body img {\nwidth: 100%;\nheight: auto;\n}\n\n#sobre {\nmargin-top: 50px;\n}\n\n\n\n\nbody {\n  margin: 0;\n  padding: 0;\n}\n\n/* Estilos para o rodapé */\nfooter {\n  background-color: #333;\n  color: #fff;\n  padding: 10px;\n}\n\n.social-icons {\n  margin-top: 10px;\n}\n\n.social-icons a {\n  color: #fff;\n  margin-right: 5px;\n}\n\n.social-icons a:hover {\n  color: #ccc;\n}\n.destaque {\n  font-weight: bold;\n  border: 2px solid rgb(0, 0, 0);\n  background-color: rgb(119, 119, 119); padding: 5px;\n  border-radius: 50px;\n  text-align: center;\n}\n\n  "
       }}
     />
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark top">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img

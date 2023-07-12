@@ -27,7 +27,7 @@ const Inicio2 = () => (
           "\n    /* Estilos para o corpo do documento */\nbody {\n    font-family: Arial, sans-serif;\n    margin: 0;\n    padding: 0;\n  background-color: azure;  \n  }\n  \n  /* Estilos para o cabeçalho */\n  header {\n    background-color: #333;\n    color: #fff;\n    padding: 20px;\n  }\n  \n  header h1 {\n    margin: 0;\n  }\n  \n \n  \n  nav ul {\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n  }\n  \n  nav ul li {\n    display: inline-block;\n    margin-right: 10px;\n  }\n  \n  nav ul li a {\n    color: #fff;\n    text-decoration: none;\n  }\n  \n  /* Estilos para o carrossel */\n  .carousel {\n    width: 100%;\n  }\n  \n  .carousel .carousel-inner .carousel-item {\n    height: 400px;\n  }\n  \n  .carousel .carousel-inner .carousel-item img {\n    height: 100%;\n    object-fit: cover;\n  }\n  \n  /* Estilos para as seções de conteúdo */\n  section {\n    padding: 40px 0;\n  }\n  \n  section h2 {\n    margin-bottom: 20px;\n  }\n  \n  /* Estilos para o rodapé */\n  footer {\n    background-color: #333;\n    color: #fff;\n    padding: 10px;\n  }\n  \n  .social-icons {\n    margin-top: 10px;\n  }\n  \n  .social-icons a {\n    color: #fff;\n    margin-right: 5px;\n  }\n  \n  \n  .social-icons a:hover {\n    color: #ccc;\n  }\n  \n  .logo{\n    width: 200px; height: 200px;\n    \n  }\n  \n\n  .img-fluid{\n    -webkit-box-shadow: 25px 14px 6px 4.5px #dddddd;\n-moz-box-shadow: 25px 14px 6px 4.5px #dddddd;\nbox-shadow: 25px 14px 6px 4.5px #dddddd;\nwidth: 600px;\nborder-radius: 125px;\n  }\n  .col-lg-6 img{\n    float: left;\n   \n    border: thin solid;\n    padding: 5px;\n    margin: 0px 10px 10px 0;\n   }\n\n  \n\n  \n  "
       }}
     />
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark top">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img
@@ -68,9 +68,9 @@ const Inicio2 = () => (
               placeholder="Buscar Cortes"
               aria-label="Search"
             />
-            <button className="btn btn-outline-light" type="submit">
+            <a className="btn btn-outline-light" type="submit" href="form-agenda" role='button'>
               Buscar
-            </button>
+            </a>
           </form>
         </div>
       </div>
